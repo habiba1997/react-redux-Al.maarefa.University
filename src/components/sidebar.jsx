@@ -4,6 +4,8 @@ import { FaUserFriends } from "react-icons/fa";
 import { FaCalendar } from "react-icons/fa";
 import { FaSignOutAlt } from "react-icons/fa";
 import userImage from "../assets/userAvatar.png";
+import {  Link } from 'react-router-dom'; 
+import Applications from "./applications";
 
 class SideBar extends Component {
 
@@ -26,10 +28,24 @@ class SideBar extends Component {
 
         </div>
         <div className="list-group">
-            <button className="p-3 list-group-item-action buttonRemovedCss bg-light"><FaUserFriends/><span className="ml-3 mr-5"> {"  "} {this.props.t('sidebar.1')} </span></button>
-            <button className="p-3 list-group-item-action buttonRemovedCss bg-light"><FaCalendar/><span className="ml-3 mr-5"> {"  "} {this.props.t('sidebar.2')} </span></button>
-            <button className="p-3 list-group-item-action buttonRemovedCss bg-light"><FaSignOutAlt/><span className="ml-3 mr-5"> {"  "} {this.props.t('sidebar.3')} </span></button>
+            <button className="p-3 list-group-item-action buttonRemovedCss bg-light">
+                <FaUserFriends/>
+                <span className="ml-3 mr-5"> {"  "} 
+                    <Link className="anchor_no_decoration" to="/applications" >{this.props.t('sidebar.1')}</Link> 
+                </span>
+            </button>
+            <button className="p-3 list-group-item-action buttonRemovedCss bg-light">
+                <FaCalendar/>
+                <span className="ml-3 mr-5"> {"  "} 
+                    <Link className="anchor_no_decoration" to="/applications" >{this.props.t('sidebar.2')} </Link>
+                </span></button>
+            <button className="p-3 list-group-item-action buttonRemovedCss bg-light">
+                <FaSignOutAlt/>
+                <span className="ml-3 mr-5"> {"  "}  
+                    <Link className="anchor_no_decoration" to="/applications" >{this.props.t('sidebar.3')} </Link>
+                </span></button>
         </div>
+        
     </div> 
   );
     }

@@ -1,4 +1,4 @@
-export default [
+[
     {
       "id": 1,
       "email": "Eliseo@gardner.biz",
@@ -55,7 +55,7 @@ export default [
     },
     {
         "id": 10,
-        "email": "Carmen_Keeling@caroline.name",
+        "email": "Carmen@caroline.name",
         "status": "Conditional Acceptance",
         "major": "Pharmaceutical"
     },
@@ -94,5 +94,5 @@ export default [
         "email": "Jayne_Kuhic@sydney.com",
         "status": "Conditional Acceptance",
         "major": "Medicine"
-      },
-  ];
+      }
+  ]

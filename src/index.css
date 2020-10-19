@@ -65,3 +65,6 @@
   cursor: default;
   
 }
+.anchor_no_decoration{
+  text-decoration: none !important;  
+}

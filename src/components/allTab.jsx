@@ -1,55 +1,107 @@
 import React, { Component } from 'react';
-import * as actions  from '../redux/actions';
-// import {useDispatch, useSelector} from 'react-redux';
 import { connect } from "react-redux";
-import {retrieveZeroPage} from '../redux/actions';
+import {retrieveRecords} from '../fakeStudentsService/actions';
 import PropTypes from 'prop-types';
-
+import { FaUser } from 'react-icons/fa'
 
 class AllTab extends Component {
     state = {         
-        end =0,
-        records = 5,
-        unsubscribe: null   
+        end :0,
+        numRecordPage : 5,
+        records: [],
+        currentRecords:[],
+        length: 0
 
     }
-    componentDidMount(){
-        this.props.retrieveZeroPage();
-        // store.dispatch(actions.retrieveZeroPage());
-        // const list = useSelector(state=> state.list);
-        // this.setState({list});
-
+    
+    constructor(props)
+    {
+        super(props);
+        props.retrieveRecords();
     }
-    flipPageForwardFunction()
+    componentWillReceiveProps(nextProps)
+    {
+        let arr = nextProps.records.data;
+        this.setState({
+            records : arr, 
+            length  : nextProps.records.length,
+            currentRecords: arr.slice(0,this.state.numRecordPage) 
+        });
+    }
+     
+    flipPageForwardFunction=()=>
      {
-        // store.dispatch(actions.flipPageForward());
+        let {end,numRecordPage,records,length} = this.state;
+        if(end+numRecordPage < length )
+		{
+            let newEnd = end +numRecordPage;
+            this.setState({
+                currentRecords: records.slice(newEnd, newEnd+numRecordPage),
+                end : newEnd
+            });
+            return;
 
+		}	
      }
-     flipPageBackwardFunction()
+     flipPageBackwardFunction=()=>
      {
-        // store.dispatch(actions.flipPageBackward());
+        let {end,numRecordPage,records} = this.state;
+		let indexBack = end;
+		if(indexBack-numRecordPage >=0)
+		{	
+			let newEnd = indexBack-numRecordPage;
+			this.setState(
+                {
+                    currentRecords: records.slice(newEnd,indexBack),
+                    end: newEnd
+                }
+            );
+            return;
+        }  
+       
      }
-     trLoop()
+     trLoop=()=>
      {
          return(  
-            this.props.records.map(item => 
+            this.state.currentRecords.map(item => 
             <tr key={item.id}>
-                <th scope="row">{item.id}</th>
-
-                <td>{item.email}</td>
+                {/* <th scope="row">{item.id}</th> */}
+                
+                <td><FaUser className="text-primary"/> 
+                    <span className="m-3">
+                     {item.email}
+                    </span>
+                </td>
                 <td>{item.status}</td>
                 <td>{item.major}</td>
             </tr>
             )
         );
      }
+    flipForward()
+    {
+        let {end,numRecordPage,length} = this.state;
+        let classes = "page-item ";
+        return classes+= (end+numRecordPage>=length)? " disabled": "";
+     }
+    flipBackward()
+    {
+        let {end,numRecordPage} = this.state;
+        let classes = "page-item ";
+        return classes+= (end-numRecordPage<0)? " disabled": "";
+    }
+    pageStatus=()=>{
+        let {end,numRecordPage,length} = this.state;
+        return (1+end)+"-"+ ((end+numRecordPage > length)? length : end+numRecordPage) + " of " + length;
+    }
     render() { 
+        
         return ( 
         <div >
             <table className="table">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            {/* <th scope="col">#</th> */}
                             <th scope="col">{this.props.t('all_tab.1')}</th>
                             <th scope="col">{this.props.t('all_tab.2')}</th>
                             <th scope="col">{this.props.t('all_tab.3')}</th>
@@ -60,19 +112,19 @@ class AllTab extends Component {
                     </tbody>
             </table>
             <nav aria-label="Page navigation">
-                <ul className="pagination justify-content-center">
+                <ul className="pagination justify-content-end">
                     <li className="mr-4 page-item">
                         <p className="page-link anchor_unpressable text-dark">
-                            1-5 of 5
+                            {this.pageStatus()}
                         </p>
                     </li>
                     {/* disabled */}
-                    <li className="page-item">
+                    <li className={this.flipBackward()}>
                         <button 
                             className="page-link" 
                             onClick={this.flipPageBackwardFunction}> {"<"} </button>
                     </li>
-                    <li className="page-item">
+                    <li className={this.flipForward()}>
                         <button 
                             className="page-link" 
                             onClick={this.flipPageForwardFunction}> {">"}  </button>
@@ -83,18 +135,18 @@ class AllTab extends Component {
     }
 }
 AllTab.propTypes = {
-    retrieveZeroPage: PropTypes.func.isRequired,
-    records: PropTypes.array.isRequired
+    retrieveRecords: PropTypes.func.isRequired,
+    records: PropTypes.object.isRequired
 }
 
 
 
-const mapDispatchToProps =(state)=> ({
-  records: state.records
+const mapDispatchToProps =(state)=> {
+    return ({
+        records: state.records
+      });
+};
+export default connect(mapDispatchToProps,{ retrieveRecords })(AllTab);
+  
 
-});
-export default connect(
-    mapDispatchToProps,
-    { retrieveZeroPage }
-  )(AllTab);
   
