@@ -5,7 +5,6 @@ import { FaCalendar } from "react-icons/fa";
 import { FaSignOutAlt } from "react-icons/fa";
 import userImage from "../assets/userAvatar.png";
 import {  Link } from 'react-router-dom'; 
-import Applications from "./applications";
 
 class SideBar extends Component {
 
