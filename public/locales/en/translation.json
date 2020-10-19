@@ -1,0 +1,28 @@
+{
+    "tabs": {
+        "1": "All",
+        "2": "Under Review",
+        "3": "Initial Acceptance",
+        "4": "Conditional Acceptance",
+        "5": "Rejected"
+      },
+      "sidebar":
+      {
+          "header": "Applications",
+          "1": "Applicants",
+          "2": "Dates",
+          "3": "Sign Out"
+      },
+      "all_tab":
+      {
+          "1": "Name",
+          "2":"Status",
+          "3": "Major"
+      },
+      "otherTab":
+      {
+          "part1": "This is ",
+          "part2": " Page"
+      }
+
+}
